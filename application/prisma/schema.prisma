@@ -1,0 +1,100 @@
+datasource db {
+  provider  = "postgresql"
+  // Pooled connection (PgBouncer, port 6543) — used by the app at runtime.
+  url       = env("DATABASE_URL")
+  // Direct connection (port 5432) — required for migrations, since they need
+  // a session-mode connection that the transaction-mode pooler can't provide.
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  ADMIN
+  DOCTOR
+}
+
+model User {
+  id                  Int       @id @default(autoincrement())
+  name                String
+  email               String    @unique
+  password            String
+  role                UserRole  @default(DOCTOR)
+  hospital            String?
+  phone               String?
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  scans   Scan[]
+  reports Report[]
+
+  @@map("users")
+}
+
+model Patient {
+  id         String   @id @default(uuid())
+  patientId  String   @unique @default(uuid())
+  name       String
+  age        Int
+  gender     String
+  bloodGroup String?
+  phone      String
+  address    String
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  scans Scan[]
+
+  @@map("patients")
+}
+
+model Scan {
+  id                  String   @id @default(uuid())
+  patientId           String
+  doctorId            Int
+  imagePath           String
+  gradcamImage        String?
+  noduleMaskImage     String?
+  predictionJson      String
+  noduleJson          String?
+  report              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  patient Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor  User     @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  reports Report[]
+
+  @@map("scans")
+}
+
+model Report {
+  id        String   @id @default(uuid())
+  scanId    String
+  doctorId  Int
+  pdfPath   String
+  createdAt DateTime @default(now())
+
+  scan   Scan @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  doctor User @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("reports")
+}
+
+model Settings {
+  id              Int      @id @default(autoincrement())
+  hospitalName    String   @default("AI Lung Diagnostics Center")
+  hospitalAddress String?
+  aiThreshold     Float    @default(0.5)
+  doctorSignature String   @default("Dr. AI Assistant")
+  theme           String   @default("light")
+  notifications   Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+
+  @@map("settings")
+}

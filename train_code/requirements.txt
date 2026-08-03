@@ -1,0 +1,15 @@
+# Training/eval pipeline (Phases 1-7). Phase 8's Gradio deployment has its
+# own requirements.txt, written separately when that phase's notebook cell
+# runs (%%writefile requirements.txt) — kept minimal on purpose for the
+# Hugging Face Space, so it isn't duplicated here.
+
+tensorflow[and-cuda]
+kagglehub
+numpy
+pandas
+matplotlib
+pillow
+scikit-learn
+opencv-python-headless
+jupyterlab
+ipykernel

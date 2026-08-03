@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json; print\\('json ok'\\)\")",
+      "Bash(python3 *)",
+      "Bash(pip show *)",
+      "Bash(jupyter nbconvert *)",
+      "Bash(ping -c 2 -t 3 192.168.48.10)",
+      "Bash(nc -z -G 3 192.168.48.10 22)",
+      "Bash(ssh *)",
+      "Bash(ssh-keygen -t ed25519 -f ~/.ssh/id_ailung_automation -N \"\" -C \"ailung-automation\")",
+      "Bash(chmod 600 ~/.ssh/id_ailung_automation)",
+      "Bash(chmod 644 ~/.ssh/id_ailung_automation.pub)",
+      "Bash(touch ~/.ssh/config)",
+      "Bash(chmod 600 ~/.ssh/config)",
+      "Bash(rsync -avz \"/Users/christacademyinstituteforadvancedstudies/Desktop/Ailung/requirements.txt\" ailung-server:~/ailung/requirements.txt)",
+      "Bash(rsync -avz notebooks/ ailung-server:~/ailung/notebooks/)",
+      "Bash(rsync -avz phase1.md phase2.md phase3.md phase4.md phase5.md phase6.md phase7.md phase8.md claude.md dataset.download.md ailung-server:~/ailung/)",
+      "Bash(scp \"/Users/christacademyinstituteforadvancedstudies/Desktop/Ailung/kaggle_token.env\" ailung-server:~/ailung/kaggle_token.env)",
+      "Bash(rsync -avz \"/Users/christacademyinstituteforadvancedstudies/Desktop/Ailung/phase3.md\" \"/Users/christacademyinstituteforadvancedstudies/Desktop/Ailung/notebooks/\" ailung-server:~/ailung/)",
+      "Bash(rsync *)",
+      "Bash(lsof -iTCP:8888 -sTCP:LISTEN)",
+      "Bash(md5 *)"
+    ]
+  }
+}

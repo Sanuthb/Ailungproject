@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  densenet-service:
+    build:
+      context: ./huggingface-space
+      dockerfile: Dockerfile
+    container_name: densenet-inference-service
+    ports:
+      - "8000:7860"
+    environment:
+      - ALLOWED_ORIGIN=*
+    restart: unless-stopped
+
+  unet-service:
+    build:
+      context: ./unet-service
+      dockerfile: Dockerfile
+    container_name: unet-nodule-inference-service
+    ports:
+      - "8001:8001"
+    environment:
+      - ALLOWED_ORIGIN=*
+      - UNET_MODEL_PATH=best_lung_nodule_unet.keras
+    restart: unless-stopped
+
+  web-app:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+    container_name: ailung-web-app
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/ailung
+      - HUGGINGFACE_SPACE_URL=http://densenet-service:7860/predict
+      - UNET_SERVICE_URL=http://unet-service:8001/predict-nodule
+    depends_on:
+      - densenet-service
+      - unet-service
+    restart: unless-stopped

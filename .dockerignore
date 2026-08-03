@@ -1,0 +1,29 @@
+# Ignore git files
+.git
+.gitignore
+
+# The Next.js app isn't part of this image at all.
+application/
+
+# Training notebooks/docs/assets aren't needed for inference.
+train_code/
+
+# Tooling directories irrelevant to the image.
+.claude/
+
+# huggingface-space/ already gets its model, Dockerfile, and .gitattributes
+# copied in via `COPY huggingface-space/ .` above — these duplicates would
+# otherwise double the build context size for no reason (the model alone is
+# ~37MB) and ship an unused nested Dockerfile in the image.
+huggingface-space/best_densenet121.keras
+huggingface-space/Dockerfile
+huggingface-space/.gitattributes
+
+# Python specific
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files
+.env*
