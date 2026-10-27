@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Users,
   Brain,
+  Bot,
   FileText,
   Settings,
   LogOut,
@@ -21,6 +22,7 @@ const navigation = [
   { name: "Patients", href: "/dashboard/patients", icon: Users },
   { name: "AI Prediction", href: "/dashboard/predict", icon: Brain },
   { name: "Reports", href: "/dashboard/reports", icon: FileText },
+  { name: "AI Assistant", href: "/dashboard/assistant", icon: Bot },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 

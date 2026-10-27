@@ -400,6 +400,11 @@ function PredictPageContent() {
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   Threshold {Math.round(scanResult.threshold * 100)}%
                 </span>
+                <Link href={`/dashboard/assistant?scanId=${scanResult.id}`}>
+                  <Button variant="outline" size="sm">
+                    Ask AI about this scan
+                  </Button>
+                </Link>
               </div>
             </CardHeader>
             <CardContent className="space-y-6">

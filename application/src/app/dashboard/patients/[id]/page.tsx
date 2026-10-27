@@ -171,8 +171,13 @@ export default function PatientDetailsPage({ params }: { params: Promise<{ id: s
                     </div>
                     <div className="flex items-center gap-3">
                       <Link href={`/dashboard/predict?scanId=${scan.id}`}>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="text-slate-700 hover:text-slate-900 cursor-pointer">
                           View AI Predictions
+                        </Button>
+                      </Link>
+                      <Link href={`/dashboard/assistant?scanId=${scan.id}`}>
+                        <Button variant="outline" size="sm" className="text-slate-700 hover:text-slate-900 cursor-pointer">
+                          Ask AI
                         </Button>
                       </Link>
                     </div>
