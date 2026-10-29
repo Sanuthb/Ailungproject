@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "tsx prisma/seed.ts",
-    "postinstall": "cp node_modules/lightningcss-linux-x64-gnu/lightningcss.linux-x64-gnu.node node_modules/lightningcss/ 2>/dev/null || true"
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "optionalDependencies": {
+    "lightningcss-linux-x64-gnu": "1.33.0"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -27,7 +29,6 @@
     "jsonwebtoken": "^9.0.3",
     "jspdf": "^4.2.1",
     "lightningcss": "^1.33.0",
-    "lightningcss-linux-x64-gnu": "1.33.0",
     "lucide-react": "^1.26.0",
     "next": "16.2.11",
     "prisma": "^5.18.0",

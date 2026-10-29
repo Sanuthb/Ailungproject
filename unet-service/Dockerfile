@@ -1,20 +1,13 @@
-FROM python:3.10-slim
+# Reuses the already-built DenseNet image: its pip packages (tensorflow-cpu,
+# fastapi, opencv, ...) are identical to this service's requirements.txt, so
+# nothing has to be downloaded again.
+# Build the DenseNet image first:  docker build -t primary-model .
+FROM primary-model:latest
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1 \
-    libglib2.0-0 \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /unet
 
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY app.py .
-COPY best_lung_nodule_unet.keras .
-
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
+COPY --chown=appuser:appuser app.py .
+COPY --chown=appuser:appuser best_lung_nodule_unet.keras .
 
 ENV PYTHONUNBUFFERED=1
 EXPOSE 8001
